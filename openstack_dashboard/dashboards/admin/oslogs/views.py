@@ -68,7 +68,7 @@ class LogView(horizon_views.HorizonTemplateView):
         node, log = node_log.split('_', 1)[0], node_log.split('_', 1)[1]
         try:
             with open(os.path.join('/var/log/oslogs/', node, log)) as fin:
-                data = fin.readlines()[-35:]
+                data = ''.join(fin.readlines()[-35:])
         except Exception:
             data = _('Unable to read log "%s".') % os.path.join(
                 '/var/log/oslogs/', node, log)
