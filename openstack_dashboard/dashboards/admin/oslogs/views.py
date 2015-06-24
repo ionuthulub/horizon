@@ -78,7 +78,7 @@ class LogView(horizon_views.HorizonTemplateView):
 
 def bare_log(request, node_log):
     node, log = node_log.split('_', 1)[0], node_log.split('_', 1)[1]
-    tail = request.GET.get('length', 0)
+    tail = int(request.GET.get('length', 0))
     try:
         with open(os.path.join('/var/log/oslogs/', node, log)) as fin:
             data = fin.read()[-tail:]
