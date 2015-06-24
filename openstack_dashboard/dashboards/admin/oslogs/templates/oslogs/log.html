@@ -1,7 +1,25 @@
+{% extends 'base.html' %}
 {% load i18n %}
-{% load url from future %}
+{% block title %}{% trans "Node" %}{% endblock %}
 
+{% block main %}
+<div class="row">
+  <div class="col-sm-12">
 
-<pre class="logs">
-  {{ console_log }}
-</pre>
+    <div class="clearfix">
+      <h3 class="pull-left">{% trans "Instance Console Log" %}</h3>
+
+      <form id="tail_length" action="" class="form-inline pull-right">
+        <label for="tail_length_select">{% trans "Log Length" %}</label>
+        <input class="span1" type="text" name="length" value="{{ log_length }}" />
+        <button class="btn btn-default btn-sm btn-primary always-enabled" type="submit">{% trans "Go" %}</button>
+        <a class="btn btn-default btn-sm" target="_blank" href="?log_length=-1">{% trans "View Full Log" %}</a>
+      </form>
+    </div>
+
+    <pre class="logs">
+      {{ console_log }}
+    </pre>
+  </div>
+</div>
+{% endblock %}
