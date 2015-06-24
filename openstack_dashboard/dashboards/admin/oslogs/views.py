@@ -66,7 +66,7 @@ class NodeView(tables.DataTableView):
 
 class LogView(horizon_views.HorizonTemplateView):
     template_name = "admin/oslogs/log.html"
-    page_title = _("View log")
+    page_title = _("{{ node }}")
 
     def get_context_data(self, *args, **kwargs):
         node_log = self.kwargs['node_log']
@@ -78,7 +78,9 @@ class LogView(horizon_views.HorizonTemplateView):
             data = _('Unable to read log "%s".') % os.path.join(
                 '/var/log/oslogs/', node, log)
         return {"console_log": data,
-                "log_length": 35}
+                "log_length": 35,
+                "node": node,
+                "log": log}
 
 
 def bare_log(request, node_log):
