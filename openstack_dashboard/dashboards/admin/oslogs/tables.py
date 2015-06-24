@@ -22,7 +22,7 @@ class LogsTable(tables.DataTable):
                          verbose_name=_("Log"))
 
     def get_object_id(self, log):
-        return "%s_%s" % (log.id, log.name)
+        return log.name
 
     class Meta:
         name = "logs"
