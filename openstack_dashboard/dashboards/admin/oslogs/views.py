@@ -68,7 +68,7 @@ class LogView(horizon_views.HorizonTemplateView):
         node, log = node_log.split('_', 1)[0], node_log.split('_', 1)[1]
         try:
             with open(os.path.join('/var/log/oslogs/', node, log)) as fin:
-                data = fin.read()[-35:]
+                data = fin.readlines()[-35:]
         except Exception:
             data = _('Unable to read log "%s".') % os.path.join(
                 '/var/log/oslogs/', node, log)
@@ -81,7 +81,7 @@ def bare_log(request, node_log):
     tail = int(request.GET.get('length', 0))
     try:
         with open(os.path.join('/var/log/oslogs/', node, log)) as fin:
-            data = fin.read()[-tail:]
+            data = fin.readlines()[-tail:]
     except Exception:
         data = ''
     return HttpResponse(data)
