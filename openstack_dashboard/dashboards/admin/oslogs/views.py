@@ -47,7 +47,7 @@ class NodeView(tables.DataTableView):
                 self.name = name
 
         try:
-            node = self.kwargs['node'].split('_', 1)
+            node = self.kwargs['node'].split('_')[1]
             logs = [Log(i, n) for
                     i, n in enumerate(os.listdir('/var/log/oslogs/' + node))]
         except Exception:
