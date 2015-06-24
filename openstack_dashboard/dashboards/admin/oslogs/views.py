@@ -33,22 +33,25 @@ class IndexView(views.DataTableView):
         return nodes
 
 
-class AdminDetailView(tables.DataTableView):
-    table_class = []
-    template_name = 'admin/hypervisors/detail.html'
-    page_title = ("Hypervisor Servers")
+class NodeView(tables.DataTableView):
+    table_class = oslogs_tables.LogsTable
+    template_name = 'admin/oslogs/node.html'
+    page_title = ("Logs")
 
     def get_data(self):
-        instances = []
+        logs = []
+
+        class Log(object):
+            def __init__(self, _id, name):
+                self.id = _id
+                self.name = name
+
         try:
-            id, name = self.kwargs['hypervisor'].split('_', 1)
-            result = None
-            for hypervisor in result:
-                if str(hypervisor.id) == id:
-                    try:
-                        instances += hypervisor.servers
-                    except AttributeError:
-                        pass
+            node = self.kwargs['node'].split('_', 1)
+            logs = [Log(i, n) for
+                    i, n in enumerate(os.listdir('/var/log/oslogs/' + node))]
         except Exception:
-            pass
-        return instances
+            exceptions.handle(self.request,
+                              _('Unable to retrieve logs list.'))
+
+        return logs
