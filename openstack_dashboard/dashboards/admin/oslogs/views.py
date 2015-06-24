@@ -1,6 +1,7 @@
 import os
 
 from django.utils.translation import ugettext_lazy as _
+from django.shortcuts import HttpResponse
 
 from horizon import exceptions
 from horizon import views as horizon_views
@@ -65,12 +66,22 @@ class LogView(horizon_views.HorizonTemplateView):
     def get_context_data(self, *args, **kwargs):
         node_log = self.kwargs['node_log']
         node, log = node_log.split('_', 1)[0], node_log.split('_', 1)[1]
-        log_length = self.kwargs.get('log_length', 35)
         try:
             with open(os.path.join('/var/log/oslogs/', node, log)) as fin:
-                data = fin.read()
+                data = fin.read()[-35:]
         except Exception:
             data = _('Unable to read log "%s".') % os.path.join(
                 '/var/log/oslogs/', node, log)
         return {"console_log": data,
-                "log_length": log_length}
+                "log_length": 35}
+
+
+def bare_log(request, node_log):
+    node, log = node_log.split('_', 1)[0], node_log.split('_', 1)[1]
+    tail = request.GET.get('length', 0)
+    try:
+        with open(os.path.join('/var/log/oslogs/', node, log)) as fin:
+            data = fin.read()[-tail:]
+    except Exception:
+        data = ''
+    return HttpResponse(data)

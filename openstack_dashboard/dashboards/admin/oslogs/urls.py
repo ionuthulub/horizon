@@ -14,5 +14,8 @@ urlpatterns = patterns(
     url(r'^(?P<node_log>[^/]+)/$',
         views.LogView.as_view(),
         name='log'),
+    url(r'^(?P<node_log>[^/]+)/bare/$',
+        views.bare_log,
+        name='bare_log'),
     url(r'^$', IndexView.as_view(), name='index'),
 )
