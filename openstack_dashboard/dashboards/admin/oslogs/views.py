@@ -62,9 +62,7 @@ class LogView(horizon_views.HorizonTemplateView):
     template_name = "project/instances/_detail_log.html"
     page_title = _("View log")
 
-    def get_context_data(self, request):
-        node = self.kwargs['node']
-        log = self.kwargs['log']
+    def get_context_data(self, request, node, log):
         log_length = self.kwargs('log_length')
         try:
             with open(os.path.join('/var/log/oslogs/', node, log)) as fin:
