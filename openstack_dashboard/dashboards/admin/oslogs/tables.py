@@ -19,10 +19,11 @@ class NodesTable(tables.DataTable):
 class LogsTable(tables.DataTable):
     name = tables.Column("name",
                          link="horizon:admin:oslogs:log",
-                         verbose_name=_("Log"))
+                         verbose_name=_("Name"))
 
     def get_object_id(self, log):
-        return log.name
+        node = self.get_full_url().split('/')[-2]
+        return node + '_' + log.name
 
     class Meta:
         name = "logs"
