@@ -9,8 +9,8 @@ class IndexView(views.DataTableView):
     template_name = 'admin/oslogs/index.html'
 
     def get_data(self):
-        nodes = []
-        nodes = {'hostname': n for n in os.listdir('/var/log/oslogs')}
+        nodes = [{'id': i, 'hostname': n} for
+                 i, n in enumerate(os.listdir('/var/log/oslogs'))]
         return nodes
 
 
