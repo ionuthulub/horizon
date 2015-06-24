@@ -50,7 +50,6 @@ class NodeView(tables.DataTableView):
 
         try:
             node = self.kwargs['node']
-            self.request['node'] = node
             logs = [Log(i, n) for
                     i, n in enumerate(os.listdir('/var/log/oslogs/' + node))]
         except Exception:
@@ -58,6 +57,11 @@ class NodeView(tables.DataTableView):
                               _('Unable to retrieve logs list.'))
 
         return logs
+
+    def get_context_data(self, **kwargs):
+        context = super(NodeView, self).get_context_data(**kwargs)
+        context['node'] = self.kwargs['node']
+        return context
 
 
 class LogView(horizon_views.HorizonTemplateView):
