@@ -59,7 +59,7 @@ class NodeView(tables.DataTableView):
 
 
 class LogView(horizon_views.HorizonTemplateView):
-    template_name = "project/instances/_detail_log.html"
+    template_name = "admin/oslogs/log.html"
     page_title = _("View log")
 
     def get_context_data(self, *args, **kwargs):
