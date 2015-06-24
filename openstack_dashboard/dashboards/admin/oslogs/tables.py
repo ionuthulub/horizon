@@ -8,6 +8,9 @@ class NodesTable(tables.DataTable):
                              link="horizon:admin:logs:detail",
                              verbose_name=_("Hostname"))
 
+    def get_object_id(self, node):
+        return "%s_%s" % (node.id, node.hostname)
+
     class Meta:
         name = "nodes"
         verbose_name = _("Nodes")

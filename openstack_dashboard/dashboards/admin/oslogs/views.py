@@ -1,5 +1,8 @@
 import os
 
+from django.utils.translation import ugettext_lazy as _
+
+from horizon import exceptions
 from horizon.tables import views
 from horizon import tables
 
@@ -10,15 +13,22 @@ from openstack_dashboard.dashboards.admin.oslogs \
 class IndexView(views.DataTableView):
     table_class = oslogs_tables.NodesTable
     template_name = 'admin/oslogs/index.html'
+    page_title = _("Nodes")
 
     def get_data(self):
+        nodes = []
+
         class Node(object):
             def __init__(self, _id, hostname):
                 self.id = _id
                 self.hostname = hostname
 
-        nodes = [Node(i, n) for
-                 i, n in enumerate(os.listdir('/var/log/oslogs'))]
+        try:
+            nodes = [Node(i, n) for
+                     i, n in enumerate(os.listdir('/var/log/oslogs'))]
+        except Exception:
+            exceptions.handle(self.request,
+                              _('Unable to retrieve nodes list.'))
 
         return nodes
 
