@@ -1,12 +1,14 @@
 import os
 
 from horizon.tables import views
+from horizon import tables
 
-from openstack_dashboard.dashboards.admin.oslogs import tables
+from openstack_dashboard.dashboards.admin.oslogs \
+    import tables as oslogs_tables
 
 
 class IndexView(views.DataTableView):
-    table_class = tables.NodesTable
+    table_class = oslogs_tables.NodesTable
     template_name = 'admin/oslogs/index.html'
 
     def get_data(self):
@@ -21,7 +23,7 @@ class IndexView(views.DataTableView):
         return nodes
 
 
-class AdminDetailView(object):
+class AdminDetailView(tables.DataTableView):
     table_class = []
     template_name = 'admin/hypervisors/detail.html'
     page_title = ("Hypervisor Servers")
@@ -29,7 +31,7 @@ class AdminDetailView(object):
     def get_data(self):
         instances = []
         try:
-            id, name = None, None
+            id, name = self.kwargs['hypervisor'].split('_', 1)
             result = None
             for hypervisor in result:
                 if str(hypervisor.id) == id:
