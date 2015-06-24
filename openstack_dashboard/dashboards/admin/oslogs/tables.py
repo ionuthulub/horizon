@@ -5,7 +5,7 @@ from horizon import tables
 
 class NodesTable(tables.DataTable):
     hostname = tables.Column("hostname",
-                             link="horizon:admin:logs:detail",
+                             link="horizon:admin:oslogs:detail",
                              verbose_name=_("Hostname"))
 
     def get_object_id(self, node):
