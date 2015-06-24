@@ -62,7 +62,7 @@ class LogView(horizon_views.HorizonTemplateView):
     template_name = "project/instances/_detail_log.html"
     page_title = _("View log")
 
-    def get_context_data(self, request, *args, **kwargs):
+    def get_context_data(self, *args, **kwargs):
         node_log = self.kwargs['node_log']
         node, log = node_log.split('_', 1)[0], node_log.split('_', 1)[1]
         log_length = self.kwargs.get('log_length', 35)
@@ -72,6 +72,5 @@ class LogView(horizon_views.HorizonTemplateView):
         except Exception:
             data = _('Unable to read log "%s".') % os.path.join(
                 '/var/log/oslogs/', node, log)
-            exceptions.handle(request, ignore=True)
         return {"console_log": data,
                 "log_length": log_length}
