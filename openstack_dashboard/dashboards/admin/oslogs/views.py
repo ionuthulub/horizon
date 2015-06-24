@@ -3,8 +3,9 @@ import os
 from django.utils.translation import ugettext_lazy as _
 
 from horizon import exceptions
-from horizon.tables import views
+from horizon import views as horizon_views
 from horizon import tables
+from horizon.tables import views
 
 from openstack_dashboard.dashboards.admin.oslogs \
     import tables as oslogs_tables
@@ -55,3 +56,22 @@ class NodeView(tables.DataTableView):
                               _('Unable to retrieve logs list.'))
 
         return logs
+
+
+class LogView(horizon_views.HorizonTemplateView):
+    template_name = "project/instances/_detail_log.html"
+    page_title = _("View log")
+
+    def get_context_data(self, request):
+        node = self.kwargs['node']
+        log = self.kwargs['log']
+        log_length = self.kwargs('log_length')
+        try:
+            with open(os.path.join('/var/log/oslogs/', node, log)) as fin:
+                data = fin.read()
+        except Exception:
+            data = _('Unable to read log "%s".') % os.path.join(
+                '/var/log/oslogs/', node, log)
+            exceptions.handle(request, ignore=True)
+        return {"console_log": data,
+                "log_length": log_length}
