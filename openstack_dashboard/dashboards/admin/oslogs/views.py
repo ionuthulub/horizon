@@ -16,7 +16,7 @@ class IndexView(views.DataTableView):
 
         nodes = [Node(i, n) for
                  i, n in enumerate(os.listdir('/var/log/oslogs'))]
-        
+
         return nodes
 
 
