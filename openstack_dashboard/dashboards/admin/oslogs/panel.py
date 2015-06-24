@@ -6,7 +6,7 @@ from openstack_dashboard.dashboards.admin import dashboard
 
 class Oslogs(horizon.Panel):
     name = _("Logs")
-    slug = "oslogs"
+    slug = "logs"
 
 
 dashboard.Admin.register(Oslogs)

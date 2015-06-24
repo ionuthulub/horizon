@@ -23,7 +23,7 @@ class SystemPanels(horizon.PanelGroup):
     panels = ('overview', 'metering', 'hypervisors', 'aggregates',
               'instances', 'volumes', 'flavors', 'images',
               'networks', 'routers', 'defaults', 'metadata_defs', 'info',
-              'oslogs')
+              'logs')
 
 
 class Admin(horizon.Dashboard):

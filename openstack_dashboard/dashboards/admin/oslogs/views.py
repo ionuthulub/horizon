@@ -1,10 +1,16 @@
-from horizon import views
+import os
+
+from horizon import tables
+from horizon.tables import views
+from horizon.utils import functions as utils
 
 
-class IndexView(views.APIView):
+class IndexView(views.DataTableView):
     # A very simple class-based view...
+    table_class = tables.DataTable
     template_name = 'admin/oslogs/index.html'
 
-    def get_data(self, request, context, *args, **kwargs):
-        # Add data to the context here...
-        return context
+    def get_data(self):
+        nodes = []
+        nodes = {'hostname': n for n in os.listdir('/var/log/oslogs')}
+        return nodes
