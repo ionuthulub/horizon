@@ -3,7 +3,7 @@ from django.utils.translation import ugettext_lazy as _
 from horizon import tables
 
 
-class InstancesTable(tables.DataTable):
+class NodesTable(tables.DataTable):
     hostname = tables.Column("hostname",
                              link="horizon:admin:logs:detail",
                              verbose_name=_("Hostname"))
