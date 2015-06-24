@@ -9,7 +9,7 @@ class NodesTable(tables.DataTable):
                              verbose_name=_("Hostname"))
 
     def get_object_id(self, node):
-        return "%s_%s" % (node.id, node.hostname)
+        return node.hostname
 
     class Meta:
         name = "nodes"
@@ -19,7 +19,7 @@ class NodesTable(tables.DataTable):
 class LogsTable(tables.DataTable):
     name = tables.Column("name",
                          link="horizon:admin:oslogs:log",
-                         verbose_name=_("Name"))
+                         verbose_name=_("Log"))
 
     def get_object_id(self, log):
         return "%s_%s" % (log.id, log.name)
