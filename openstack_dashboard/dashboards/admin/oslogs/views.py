@@ -38,7 +38,7 @@ class IndexView(views.DataTableView):
 class NodeView(tables.DataTableView):
     table_class = oslogs_tables.LogsTable
     template_name = 'admin/oslogs/node.html'
-    page_title = ("Logs")
+    page_title = _("{{ node }} logs")
 
     def get_data(self):
         logs = []
@@ -50,6 +50,7 @@ class NodeView(tables.DataTableView):
 
         try:
             node = self.kwargs['node']
+            self.request['node'] = node
             logs = [Log(i, n) for
                     i, n in enumerate(os.listdir('/var/log/oslogs/' + node))]
         except Exception:
