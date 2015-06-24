@@ -6,7 +6,6 @@ from horizon import tables
 class InstancesTable(tables.DataTable):
     hostname = tables.Column("hostname",
                              link="horizon:admin:logs:detail",
-                             attrs={'data-type': 'naturalSort'},
                              verbose_name=_("Hostname"))
 
     class Meta:
