@@ -83,5 +83,6 @@ def bare_log(request, node_log):
         with open(os.path.join('/var/log/oslogs/', node, log)) as fin:
             data = fin.readlines()[-tail:]
     except Exception:
-        data = ''
-    return HttpResponse(data)
+        data = _('Unable to read log "%s".') % os.path.join(
+            '/var/log/oslogs/', node, log)
+    return HttpResponse(data, content_type="text/plain")
