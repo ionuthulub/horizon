@@ -8,7 +8,7 @@ from openstack_dashboard.dashboards.admin.oslogs import views
 
 urlpatterns = patterns(
     'openstack_dashboard.dashboards.admin.oslogs.views',
-    url(r'^(?P<node>[^/]+)/$',
+    url(r'^(?P<node>[^/_]+)/$',
         views.NodeView.as_view(),
         name='node'),
     url(r'^(?P<node_log>[^/]+)/$',
