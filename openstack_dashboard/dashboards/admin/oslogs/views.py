@@ -2,7 +2,6 @@ import os
 
 from horizon import tables
 from horizon.tables import views
-from horizon.utils import functions as utils
 
 
 class IndexView(views.DataTableView):
