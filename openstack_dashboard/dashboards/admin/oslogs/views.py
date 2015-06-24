@@ -62,7 +62,7 @@ class LogView(horizon_views.HorizonTemplateView):
     template_name = "project/instances/_detail_log.html"
     page_title = _("View log")
 
-    def get_context_data(self, request):
+    def get_context_data(self, request, *args, **kwargs):
         node_log = self.kwargs('node_log')
         node, log = node_log.split('_', 1)[0], node_log.split('_', 1)[1]
         log_length = self.kwargs('log_length')
