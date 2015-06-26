@@ -3,7 +3,7 @@ horizon.oslogs = {
     is_paused: false,
 
     getConsoleLog: function () {
-        if (!horizon.oslogs.is_paused) {
+        if (horizon.oslogs.is_paused == false) {
             var form_element = $("#log_tail_length"),
                 data;
 
