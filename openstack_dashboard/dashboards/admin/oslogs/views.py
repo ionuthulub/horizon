@@ -56,7 +56,7 @@ class NodeView(tables.DataTableView):
             for log in logs:
                 try:
                     path = open(
-                        os.path.join('/var/log/oslogs/', log.name + '.path'),
+                        os.path.join('/var/log/oslogs/', node, log.name + '.path'),
                         'r').read().strip()
                     log.path = path
                 except Exception:
