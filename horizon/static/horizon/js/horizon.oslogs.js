@@ -3,7 +3,7 @@ horizon.oslogs = {
     is_paused: false,
 
     getConsoleLog: function () {
-        if ($("#log_tail_length") == 0) {
+        if ($("#log_tail_length").length == 0) {
             return;
         }
         if (horizon.oslogs.is_paused == false) {
