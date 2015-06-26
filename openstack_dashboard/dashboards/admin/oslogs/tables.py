@@ -20,6 +20,8 @@ class LogsTable(tables.DataTable):
     name = tables.Column("name",
                          link="horizon:admin:oslogs:log",
                          verbose_name=_("Name"))
+    path = tables.Column("path",
+                         verbose_name=_("Path"))
 
     def get_object_id(self, log):
         node = self.get_full_url().split('/')[-2]

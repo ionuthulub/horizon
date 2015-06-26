@@ -47,11 +47,20 @@ class NodeView(tables.DataTableView):
             def __init__(self, _id, name):
                 self.id = _id
                 self.name = name
+                self.path = ""
 
         try:
             node = self.kwargs['node']
             logs = [Log(i, n) for
                     i, n in enumerate(os.listdir('/var/log/oslogs/' + node))]
+            for log in logs:
+                try:
+                    path = open(
+                        os.path.join('/var/log/oslogs/', log.name + '.path'),
+                        'r').read().strip()
+                    log.path = path
+                except Exception:
+                    pass
         except Exception:
             exceptions.handle(self.request,
                               _('Unable to retrieve logs list.'))
