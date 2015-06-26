@@ -31,10 +31,15 @@ horizon.addInitFunction(horizon.oslogs.init = function () {
     var $document = $(document);
 
     $document.on('submit', '#log_tail_length', function (evt) {
-        if (horizon.instances.is_paused)
+        if (horizon.instances.is_paused) {
             horizon.instances.is_paused = false;
-        else
+            $("#log_tail_length_btn").html("Play");
+        }
+        else {
             horizon.instances.is_paused = true;
+            $("#log_tail_length_btn").html("Pause");
+        }
+        evt.preventDefault();
     });
 
     horizon.oslogs.getConsoleLog();

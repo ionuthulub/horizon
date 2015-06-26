@@ -12,7 +12,7 @@
       <form id="log_tail_length" action="bare" class="form-inline pull-right">
         <label for="tail_length_select">{% trans "Log Length" %}</label>
         <input class="span1" type="text" name="length" value="{{ log_length }}" />
-        <button class="btn btn-default btn-sm btn-primary always-enabled" type="submit">{% trans "Go" %}</button>
+        <button id="log_tail_length_btn" class="btn btn-default btn-sm btn-primary always-enabled" type="submit">{% trans "Pause" %}</button>
         <a class="btn btn-default btn-sm" target="_blank" href="bare">{% trans "View Full Log" %}</a>
       </form>
     </div>
