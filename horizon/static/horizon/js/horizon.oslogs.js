@@ -3,6 +3,9 @@ horizon.oslogs = {
     is_paused: false,
 
     getConsoleLog: function () {
+        if ($("#log_tail_length") == 0) {
+            return;
+        }
         if (horizon.oslogs.is_paused == false) {
             var form_element = $("#log_tail_length"),
                 data;
