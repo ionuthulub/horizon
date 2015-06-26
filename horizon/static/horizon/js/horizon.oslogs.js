@@ -33,11 +33,11 @@ horizon.addInitFunction(horizon.oslogs.init = function () {
     $document.on('submit', '#log_tail_length', function (evt) {
         if (horizon.instances.is_paused) {
             horizon.instances.is_paused = false;
-            $("#log_tail_length_btn").html("Play");
+            $("#log_tail_length_btn").html("Pause");
         }
         else {
             horizon.instances.is_paused = true;
-            $("#log_tail_length_btn").html("Pause");
+            $("#log_tail_length_btn").html("Play");
         }
         evt.preventDefault();
     });

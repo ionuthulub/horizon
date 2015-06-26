@@ -52,7 +52,8 @@ class NodeView(tables.DataTableView):
         try:
             node = self.kwargs['node']
             logs = [Log(i, n) for
-                    i, n in enumerate(os.listdir('/var/log/oslogs/' + node))]
+                    i, n in enumerate(os.listdir('/var/log/oslogs/' + node))
+                    if not n.endswith('.path')]
             for log in logs:
                 try:
                     path = open(
