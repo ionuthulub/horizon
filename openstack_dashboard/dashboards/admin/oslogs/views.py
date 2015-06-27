@@ -2,6 +2,7 @@ import os
 
 from django.utils.translation import ugettext_lazy as _
 from django.shortcuts import HttpResponse
+from django.conf import settings
 
 from horizon import exceptions
 from horizon import views as horizon_views
@@ -10,6 +11,9 @@ from horizon.tables import views
 
 from openstack_dashboard.dashboards.admin.oslogs \
     import tables as oslogs_tables
+
+
+OSLOGS_PATH = settings.OSLOGS_PATH or '/var/log/oslogs/'
 
 
 class IndexView(views.DataTableView):
@@ -27,7 +31,7 @@ class IndexView(views.DataTableView):
 
         try:
             nodes = [Node(i, n) for
-                     i, n in enumerate(os.listdir('/var/log/oslogs'))]
+                     i, n in enumerate(os.listdir(OSLOGS_PATH))]
         except Exception:
             exceptions.handle(self.request,
                               _('Unable to retrieve nodes list.'))
@@ -52,12 +56,12 @@ class NodeView(tables.DataTableView):
         try:
             node = self.kwargs['node']
             logs = [Log(i, n) for
-                    i, n in enumerate(os.listdir('/var/log/oslogs/' + node))
+                    i, n in enumerate(os.listdir(OSLOGS_PATH + node))
                     if not n.endswith('.path')]
             for log in logs:
                 try:
                     path = open(
-                        os.path.join('/var/log/oslogs/', node, log.name + '.path'),
+                        os.path.join(OSLOGS_PATH, node, log.name + '.path'),
                         'r').read().strip()
                     log.path = path
                 except Exception:
@@ -82,11 +86,11 @@ class LogView(horizon_views.HorizonTemplateView):
         node_log = self.kwargs['node_log']
         node, log = node_log.split('_', 1)[0], node_log.split('_', 1)[1]
         try:
-            with open(os.path.join('/var/log/oslogs/', node, log)) as fin:
+            with open(os.path.join(OSLOGS_PATH, node, log)) as fin:
                 data = ''.join(fin.readlines()[-35:])
         except Exception:
             data = _('Unable to read log "%s".') % os.path.join(
-                '/var/log/oslogs/', node, log)
+                OSLOGS_PATH, node, log)
         return {"console_log": data,
                 "log_length": 35,
                 "node": node,
@@ -97,9 +101,9 @@ def bare_log(request, node_log):
     node, log = node_log.split('_', 1)[0], node_log.split('_', 1)[1]
     tail = int(request.GET.get('length', 0))
     try:
-        with open(os.path.join('/var/log/oslogs/', node, log)) as fin:
+        with open(os.path.join(OSLOGS_PATH, node, log)) as fin:
             data = fin.readlines()[-tail:]
     except Exception:
         data = _('Unable to read log "%s".') % os.path.join(
-            '/var/log/oslogs/', node, log)
+            OSLOGS_PATH, node, log)
     return HttpResponse(data, content_type="text/plain")
