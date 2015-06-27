@@ -13,7 +13,10 @@ from openstack_dashboard.dashboards.admin.oslogs \
     import tables as oslogs_tables
 
 
-OSLOGS_PATH = settings.OSLOGS_PATH or '/var/log/oslogs/'
+try:
+    OSLOGS_PATH = settings.OSLOGS_PATH
+except AttributeError:
+    OSLOGS_PATH = '/var/log/oslogs/'
 
 
 class IndexView(views.DataTableView):
